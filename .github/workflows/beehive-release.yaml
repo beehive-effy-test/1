@@ -1,0 +1,16 @@
+---
+
+name: Beehive Release Pipeline
+
+on:
+  pull_request:
+    branches:
+      -  main
+    types: [closed]
+
+jobs:
+  do-release:
+    name: beehive-task-bump-version
+    if: github.event.pull_request.merged == true
+    uses: beehive-effy-test/syseng-github-actions-workflows/.github/workflows/console-core-java-release.yaml@main
+    secrets: inherit
