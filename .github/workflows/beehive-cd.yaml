@@ -1,0 +1,19 @@
+---
+name: Beehive CD Pipeline
+concurrency: dev
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-deploy-dev:
+    name: beehive-cd
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    uses: beehive-effy-test/syseng-github-actions-workflows/.github/workflows/console-core-java-build-deploy-dev.yaml@main
+    secrets: inherit
+    with:
+      service-short-name: 1
+      deployment-config-repo: beehive-effy-test/deployment-config
