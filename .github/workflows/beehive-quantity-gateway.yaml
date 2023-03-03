@@ -1,0 +1,35 @@
+---
+name: Beehive Quantity Gate Pipeline
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+jobs:
+  run-unit-test:
+    name: beehive-task-unit-test
+
+    # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+    permissions:
+      checks: 'write'
+      contents: 'read'
+      issues: 'read'
+      pull-requests: 'write'
+
+    uses: beehive-effy-test/beehive-github-actions-workflows/.github/workflows/java-unit-tests.yaml@main
+    secrets: inherit
+    with:
+      sonar-project-key: beehive-effy-test_1
+  run-vulnerability-scan:
+    name: beehive-task-vulnerability-scan
+    permissions:
+      checks: 'write'
+      contents: 'read'
+      issues: 'read'
+      pull-requests: 'write'
+
+    uses: beehive-effy-test/beehive-github-actions-workflows/.github/workflows/java-vulnerability-scan.yaml@main
+    secrets: inherit
